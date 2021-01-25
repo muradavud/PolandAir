@@ -88,6 +88,7 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.ViewHolder> 
         //holder.chart.setVisibleXRangeMaximum(7);
         holder.chart.invalidate(); // refresh
         // commit test
+        // commit test 2
     }
 
     @Override
