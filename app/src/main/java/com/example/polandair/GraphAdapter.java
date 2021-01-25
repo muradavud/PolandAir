@@ -89,6 +89,7 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.ViewHolder> 
         holder.chart.invalidate(); // refresh
         // commit test
         // commit test 2
+        // commit test 3
     }
 
     @Override
