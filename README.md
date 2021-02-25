@@ -12,3 +12,5 @@ Application that allows monitoring air pollution in Poland. The pollution data u
 
 ## Screenshots
 
+
+<img src="screenshots/screenshot_home.jpg" width=300>
