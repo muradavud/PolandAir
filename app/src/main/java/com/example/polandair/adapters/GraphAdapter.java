@@ -1,4 +1,4 @@
-package com.example.polandair;
+package com.example.polandair.adapters;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.polandair.R;
 import com.example.polandair.model.SensorDataPOJO;
 import com.example.polandair.room.SensorHolder;
 import com.github.mikephil.charting.charts.LineChart;
@@ -44,9 +45,10 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.ViewHolder> 
 
         List<Entry> entries = new ArrayList<>();
         List<SensorDataPOJO.Value> values = sensorData.get(position).getValues();
+
         float xx = 0;
         List<String> timestamps = new ArrayList<>();
-
+        if (values.size() < 7) { return; }
         values.subList(7, values.size()).clear();
         Collections.reverse(values);
         for (SensorDataPOJO.Value value : values) {
@@ -56,11 +58,9 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.ViewHolder> 
             float x = xx;
             timestamps.add(value.getDate().substring(11,16));
             xx = xx + 1;
+
             float y = (float)value.getValue();
 
-
-
-            Log.d("xy", "x: " + y + "| y: " + value.getDate().substring(11,16) + "  i:" + xx);
             entries.add(new Entry(x,y));
 
 
@@ -87,9 +87,6 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.ViewHolder> 
         //holder.chart.setMaxVisibleValueCount(5);
         //holder.chart.setVisibleXRangeMaximum(7);
         holder.chart.invalidate(); // refresh
-        // commit test
-        // commit test 2
-        // commit test 3
     }
 
     @Override

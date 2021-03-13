@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/favouritesFragment"
-        android:name="com.example.polandair.FavouritesFragment"
+        android:name="com.example.polandair.fragments.FavouritesFragment"
         android:label="fragment_favourites"
         tools:layout="@layout/fragment_favourites" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
-        android:name="com.example.polandair.InfoFragment"
+        android:name="com.example.polandair.fragments.InfoFragment"
         android:label="fragment_info"
         tools:layout="@layout/fragment_info" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.example.polandair.MapsFragment"
+        android:name="com.example.polandair.fragments.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" >
         <action
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/graphFragment"
-        android:name="com.example.polandair.GraphFragment"
+        android:name="com.example.polandair.fragments.GraphFragment"
         android:label="fragment_graph"
         tools:layout="@layout/fragment_graph" />
 </navigation>

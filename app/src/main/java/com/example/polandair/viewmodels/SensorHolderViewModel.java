@@ -1,4 +1,4 @@
-package com.example.polandair;
+package com.example.polandair.viewmodels;
 
 import android.app.Application;
 
@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.polandair.repositories.SensorHolderRepository;
 import com.example.polandair.room.SensorHolder;
 
 import java.util.List;

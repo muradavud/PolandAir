@@ -1,6 +1,11 @@
-package com.example.polandair;
+package com.example.polandair.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,19 +15,16 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import com.example.polandair.R;
+import com.example.polandair.adapters.RecyclerViewAdapterFavourites;
 import com.example.polandair.model.JsonPlaceHolderApi;
 import com.example.polandair.model.SensorDataPOJO;
 import com.example.polandair.model.SensorPOJO;
 import com.example.polandair.model.StationIndexPOJO;
+import com.example.polandair.repositories.SensorHolderRepository;
 import com.example.polandair.room.SensorHolder;
 import com.example.polandair.room.Station;
+import com.example.polandair.viewmodels.StationsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +112,6 @@ public class FavouritesFragment extends Fragment {
                 .getInstance(getActivity().getApplication()))
                 .get(StationsViewModel.class);
         FavouritesViewModel.getAllFavourites().observe(getActivity(), stations -> {
-            Log.d("haha2", "onViewCreated: updated");
             ArrayList<String> stationName = new ArrayList<>();
             ArrayList<String> stationAddress = new ArrayList<>();
             ArrayList<String> stationIndex = new ArrayList<>();
@@ -118,7 +119,6 @@ public class FavouritesFragment extends Fragment {
                 stationName.add(station.getStationName());
                 stationAddress.add(station.getAddressStreet());
                 stationIndex.add(station.getIndex());
-                Log.d("ppp", station.getStationName() + "/n" + station.getIndex()  + "/n");
             }
             RecyclerViewAdapterFavourites adapter = new RecyclerViewAdapterFavourites(getActivity(), HRecyclerView, stationName,
                     stationAddress, stationIndex, stations, helper2);

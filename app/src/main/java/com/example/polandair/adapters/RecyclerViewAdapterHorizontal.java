@@ -1,4 +1,4 @@
-package com.example.polandair;
+package com.example.polandair.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,12 +11,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.polandair.R;
 import com.example.polandair.room.SensorHolder;
-import com.google.android.gms.common.util.NumberUtils;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -63,7 +61,6 @@ public class RecyclerViewAdapterHorizontal extends RecyclerView.Adapter<Recycler
     }
 
     private int getIndexColor(String sensor, String num, Context context) {
-        Log.d("kek", "getIndexColor: " + num + " " + sensor);
         if (!num.matches("-?\\d+(\\.\\d+)?")) {
             return 0;
         }
@@ -171,7 +168,6 @@ public class RecyclerViewAdapterHorizontal extends RecyclerView.Adapter<Recycler
             if (21 < n) {
                 res = 6; }
         }
-        Log.d("yepe", String.valueOf(res));
         switch (res) {
             case 1:
                 res = Color.argb(200, 105, 179, 76); break;
@@ -186,7 +182,6 @@ public class RecyclerViewAdapterHorizontal extends RecyclerView.Adapter<Recycler
             case 6:
                 res = Color.argb(200, 255, 13, 13); break;
         }
-        Log.d("yepe", String.valueOf(res));
         return res;
     }
 
@@ -195,10 +190,6 @@ public class RecyclerViewAdapterHorizontal extends RecyclerView.Adapter<Recycler
     @Override
     public int getItemCount() {
         return sensors.size();
-    }
-
-    public void setSensors(List<SensorHolder> sensors) {
-        Toast.makeText(mContext, "nice", Toast.LENGTH_SHORT).show();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

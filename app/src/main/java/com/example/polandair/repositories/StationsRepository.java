@@ -1,4 +1,4 @@
-package com.example.polandair;
+package com.example.polandair.repositories;
 
 import android.app.Application;
 import android.os.AsyncTask;

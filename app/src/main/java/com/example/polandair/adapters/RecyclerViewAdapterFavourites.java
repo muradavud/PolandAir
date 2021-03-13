@@ -1,14 +1,10 @@
-package com.example.polandair;
+package com.example.polandair.adapters;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,15 +13,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.polandair.R;
 import com.example.polandair.model.JsonPlaceHolderApi;
 import com.example.polandair.model.SensorDataPOJO;
 import com.example.polandair.model.SensorPOJO;
 import com.example.polandair.model.StationIndexPOJO;
+import com.example.polandair.repositories.FavouritesRepository;
+import com.example.polandair.repositories.SensorHolderRepository;
 import com.example.polandair.room.Favourite;
 import com.example.polandair.room.SensorHolder;
 import com.example.polandair.room.Station;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -96,7 +93,7 @@ public class RecyclerViewAdapterFavourites extends RecyclerView.Adapter<Recycler
 
     }
 
-    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+    public ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
@@ -126,7 +123,6 @@ public class RecyclerViewAdapterFavourites extends RecyclerView.Adapter<Recycler
         TextView stationName;
         TextView stationAddress;
         TextView stationIndex;
-        MaterialButton deleteButton;
         Station station;
         MaterialCardView cardView;
         ConstraintLayout cardGradient;
@@ -166,7 +162,6 @@ public class RecyclerViewAdapterFavourites extends RecyclerView.Adapter<Recycler
             @Override
             public void onResponse(Call<List<SensorPOJO>> call, Response<List<SensorPOJO>> response) {
                 if (!response.isSuccessful()) {
-                    Log.d("TAG", "onResponse: " + response.code());
                     return;
                 }
                 List<SensorPOJO> sensorPOJOS = response.body();
@@ -190,7 +185,6 @@ public class RecyclerViewAdapterFavourites extends RecyclerView.Adapter<Recycler
             @Override
             public void onResponse(Call<StationIndexPOJO> call, Response<StationIndexPOJO> response) {
                 if (!response.isSuccessful()) {
-                    Log.d("TAG", "onResponse: " + response.code());
                     return;
                 }
 
@@ -215,7 +209,6 @@ public class RecyclerViewAdapterFavourites extends RecyclerView.Adapter<Recycler
 
 
                 SensorDataPOJO sensorData = response.body();
-                Log.d("enq", "onResponse: " + sensorData.getKey());
                 SensorHolder sensorHolder = new SensorHolder();
                 sensorHolder.setId(sensorPOJO.getId());
                 sensorHolder.setCode(sensorPOJO.getParam().getParamCode());

@@ -1,16 +1,11 @@
-package com.example.polandair;
+package com.example.polandair.repositories;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.polandair.room.Favourite;
 import com.example.polandair.room.MyDao;
 import com.example.polandair.room.MyDatabase;
-import com.example.polandair.room.Station;
-
-import java.util.List;
 
 public class FavouritesRepository {
     private MyDao myDao;

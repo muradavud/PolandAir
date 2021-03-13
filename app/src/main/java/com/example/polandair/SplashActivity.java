@@ -1,19 +1,18 @@
 package com.example.polandair;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.polandair.model.JsonPlaceHolderApi;
 import com.example.polandair.model.StationIndexPOJO;
 import com.example.polandair.model.StationPOJO;
+import com.example.polandair.repositories.StationsRepository;
 import com.example.polandair.room.Station;
 
 import java.util.List;
@@ -111,7 +110,6 @@ public class SplashActivity extends AppCompatActivity {
                             station.getAddressStreet(),
                             stIndex);
                     stationsRepository.update(stationHolder);
-                    Log.d("test", stationHolder.getId() + ": " + stationHolder.getIndex());
                 }
 
                 @Override

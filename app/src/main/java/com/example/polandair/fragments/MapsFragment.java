@@ -1,13 +1,4 @@
-package com.example.polandair;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.example.polandair.fragments;
 
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -17,25 +8,32 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.polandair.MainActivity;
+import com.example.polandair.R;
 import com.example.polandair.model.JsonPlaceHolderApi;
-import com.example.polandair.model.SensorPOJO;
 import com.example.polandair.model.SensorDataPOJO;
+import com.example.polandair.model.SensorPOJO;
+import com.example.polandair.repositories.SensorHolderRepository;
 import com.example.polandair.room.SensorHolder;
 import com.example.polandair.room.Station;
-import com.example.polandair.model.StationIndexPOJO;
+import com.example.polandair.viewmodels.StationsViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -44,7 +42,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -94,7 +91,6 @@ public class MapsFragment extends Fragment {
 
                 for (Station station : stations) {
                     if (markerHashMap.containsKey(station.getId())) {
-                        Log.d("opp", "onMapReady: df");
                         if (!station.getIndex().equals("null")) {
                             Marker marker = markerHashMap.get(station.getId());
                             marker.setTag(station);
@@ -209,11 +205,9 @@ public class MapsFragment extends Fragment {
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             locationPermissionGranted = true;
-            Log.d("sukaa", "getLocationPermission: net1");
         } else {
             requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-            Log.d("sukaa", "getLocationPermission: net2");
         }
     }
 
@@ -231,18 +225,15 @@ public class MapsFragment extends Fragment {
                 }
             }
         }
-        Log.d("yopta", "onRequestPermissionsResult: ");
         updateLocationUI();
     }
 
     private void updateLocationUI() {
         if (map == null) {
-            Log.d("sukaa", "updateLocationUI: da");
             return;
         }
         try {
             if (locationPermissionGranted) {
-                Log.d("sukaa", "updateLocationUI: da1");
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
@@ -297,7 +288,6 @@ public class MapsFragment extends Fragment {
         recyclerView = ((MainActivity)getActivity()).findViewById(R.id.recyclerView);
         floatingActionButton = ((MainActivity)getActivity()).findViewById(R.id.floatingActionButton);
         recyclerView.setLayoutManager(layoutManager);
-        //recyclerView.setVisibility(View.VISIBLE);
 
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
@@ -327,17 +317,8 @@ public class MapsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         lastCameraPosition = map.getCameraPosition();
-        Log.d("heyaaa", "onDestroyView: ");
-
     }
 
-    @Override
-    public void onDestroy() {
-
-        super.onDestroy();
-        Log.d("heyaaa", "onDestroy: ");
-
-    }
 
     @Override
     public void onSaveInstanceState (Bundle outState) {
@@ -358,7 +339,6 @@ public class MapsFragment extends Fragment {
             @Override
             public void onResponse(Call<List<SensorPOJO>> call, Response<List<SensorPOJO>> response) {
                 if (!response.isSuccessful()) {
-                    Log.d("TAG", "onResponse: " + response.code());
                     return;
                 }
                 List<SensorPOJO> sensorPOJOS = response.body();
@@ -386,10 +366,7 @@ public class MapsFragment extends Fragment {
 
                     return;
                 }
-
-
                 SensorDataPOJO sensorData = response.body();
-                Log.d("enq", "onResponse: " + sensorData.getKey());
                 SensorHolder sensorHolder = new SensorHolder();
                 sensorHolder.setId(sensorPOJO.getId());
                 sensorHolder.setCode(sensorPOJO.getParam().getParamCode());

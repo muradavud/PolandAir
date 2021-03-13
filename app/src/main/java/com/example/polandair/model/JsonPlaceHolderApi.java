@@ -1,10 +1,5 @@
 package com.example.polandair.model;
 
-import com.example.polandair.model.StationPOJO;
-import com.example.polandair.model.SensorPOJO;
-import com.example.polandair.model.SensorDataPOJO;
-import com.example.polandair.model.StationIndexPOJO;
-
 import java.util.List;
 
 import retrofit2.Call;

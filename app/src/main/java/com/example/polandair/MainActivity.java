@@ -1,7 +1,13 @@
 package com.example.polandair;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -10,16 +16,12 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-
+import com.example.polandair.adapters.RecyclerViewAdapterHorizontal;
 import com.example.polandair.model.SensorDataPOJO;
+import com.example.polandair.repositories.FavouritesRepository;
 import com.example.polandair.room.Favourite;
 import com.example.polandair.room.SensorHolder;
+import com.example.polandair.viewmodels.SensorHolderViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -99,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(layoutManager);
 
-        SensorHolderRepository sensorHolderRepository = new SensorHolderRepository(getApplication());
-
         myViewModel = new ViewModelProvider( this)
                 .get(SensorHolderViewModel.class);
         myViewModel.getSensors().observe(this, new Observer<List<SensorHolder>>() {
@@ -112,10 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     ArrayList<String> sensor = new ArrayList<>();
                     ArrayList<String> number = new ArrayList<>();
                     ArrayList<String> unit = new ArrayList<>();
-                    //recyclerView.setAdapter(adapter);
-                    Log.d("pls", "onChanged: " + sensorHolders.size());
                     for (SensorHolder sensorHolder : sensorHolders) {
-                        //sensorHolderRepository.delete(sensorHolder);
                         sensor.add(sensorHolder.getCode());
 
                         SensorDataPOJO.Value mostRecent = getMostRecent(sensorHolder);
@@ -132,13 +129,6 @@ public class MainActivity extends AppCompatActivity {
                     recyclerView.setAdapter(adapter);
                 }
         });
-    }
-
-    private void addFragment(List<SensorHolder> sensorHolderBundle) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fragment, GraphFragment.newInstance(sensorHolderBundle));
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
     }
 
     public void menuItemOnClick(MenuItem menuItem) {
